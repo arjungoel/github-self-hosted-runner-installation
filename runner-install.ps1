@@ -6,10 +6,6 @@ $repo_name = Read-Host "Please enter Github repo name"
 $runner_name = Read-Host "Please enter github self-hosted runner name"
 $label = Read-Host "Please enter the runner label name e.g. label-1,label-2"
 $runner_work_folder_name = Read-Host "Please enter the _work folder name (runner default work location)"
-$headers = @{
-    "Authorization" = "Bearer $gh_pat"
-    "Accept" = "application/vnd.github.v3+json"
-}
 
 # Download Runner
 
@@ -30,7 +26,7 @@ Add-Type -AssemblyName System.IO.Compression.FileSystem ; [System.IO.Compression
 Start-Sleep -Seconds 30
 
 # REST API request to get runner information
-$runner_info = Invoke-RestMethod -Method Get -Uri "https://api.github.com/repos/$gh_org_username/$repo_name/actions/runners" -Headers $headers
+$runner_info = Invoke-RestMethod -Method Get -Uri "https://api.github.com/repos/$gh_org_username/$repo_name/actions/runners" -Headers @{ "Authorization" = "Bearer $gh_pat"; "Accept" = "application/vnd.github.v3+json" }
 
 # Extract the runner ID and status
 $runner_id = $runner_info.runners | Where-Object { $_.name -eq $runner_name } | Select-Object -ExpandProperty id
