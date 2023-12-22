@@ -1,1 +1,1 @@
-# github-self-hosted-runner-installation
+# PS for installing github-self-hosted-runner on EC2 (Windows instance)
